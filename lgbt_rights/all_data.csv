@@ -1,0 +1,51 @@
+state,abbr,housing_so,housing_gi,employment_public_so,employment_public_gi,employment_private_so,employment_private_gi,conversion_ban,poll_favor,dems_perc_senate,dems_perc_house,dem_gov
+Alabama,AL,0,0,0,0,0,0,0,59.0,22.86,26.67,False
+Alaska,AK,0,0,1,0,0,0,0,68.0,35.0,37.5,False
+Arizona,AZ,0,0,1,0,0,0,0,68.0,43.33,48.33,False
+Arkansas,AR,0,0,0,0,0,0,0,56.0,25.71,24.0,False
+California,CA,1,1,1,1,1,1,1,73.0,72.5,75.0,True
+Colorado,CO,1,1,1,1,1,1,0,72.0,54.29,63.08,True
+Connecticut,CT,1,1,1,1,1,1,1,76.0,63.89,60.93,True
+Delaware,DE,1,1,1,1,1,1,1,71.0,57.14,63.41,True
+Florida,FL,0,0,0,0,0,0,0,68.0,42.5,39.17,False
+Georgia,GA,0,0,0,0,0,0,0,65.0,37.5,41.67,False
+Hawaii,HI,1,1,1,1,1,1,1,70.0,96.0,90.2,True
+Idaho,ID,0,0,0,0,0,0,0,68.0,20.0,20.0,False
+Illinois,IL,1,1,1,1,1,1,1,69.0,67.8,62.71,True
+Indiana,IN,0,0,1,1,0,0,0,65.0,20.0,33.0,False
+Iowa,IA,1,1,1,1,1,1,0,68.0,36.0,46.0,False
+Kansas,KS,0,0,0,0,0,0,0,70.0,27.5,32.8,True
+Kentucky,KY,0,0,1,1,0,0,0,59.0,26.32,39.0,False
+Louisiana,LA,0,0,0,0,0,0,0,67.0,35.9,37.5,True
+Maine,ME,1,1,1,1,1,1,0,69.0,60.0,58.94,True
+Maryland,MD,1,1,1,1,1,1,1,70.0,70.21,70.21,False
+Massachusetts,MA,1,1,1,1,1,1,0,75.0,85.0,79.38,False
+Michigan,MI,0,0,1,1,0,0,0,70.0,42.11,47.27,True
+Minnesota,MN,1,1,1,1,1,1,0,70.0,49.25,55.97,True
+Mississippi,MS,0,0,0,0,0,0,0,59.0,36.54,37.7,False
+Missouri,MO,0,0,1,0,0,0,0,64.0,29.41,28.83,False
+Montana,MT,0,0,1,1,0,0,0,72.0,40.0,42.0,True
+Nebraska,NE,0,0,0,0,0,0,0,65.0,0.0,0.0,False
+Nevada,NV,1,1,1,1,1,1,1,68.0,61.9,69.05,True
+New Hampshire,NH,1,1,1,1,1,1,1,81.0,58.33,58.5,False
+New Jersey,NJ,1,1,1,1,1,1,1,72.0,62.5,67.5,True
+New Mexico,NM,1,1,1,1,1,1,1,73.0,61.9,65.71,True
+New York,NY,1,1,1,1,1,1,1,73.0,63.49,70.67,True
+North Carolina,NC,0,0,1,0,0,0,0,66.0,42.0,45.83,True
+North Dakota,ND,0,0,0,0,0,0,0,72.0,21.28,15.96,False
+Ohio,OH,0,0,1,1,0,0,0,68.0,27.27,38.38,False
+Oklahoma,OK,0,0,0,0,0,0,0,62.0,18.75,23.76,False
+Oregon,OR,1,1,1,1,1,1,1,72.0,63.33,63.33,True
+Pennsylvania,PA,0,0,1,1,0,0,0,68.0,42.0,45.81,True
+Rhode Island,RI,1,1,1,1,1,1,1,73.0,86.84,88.0,True
+South Carolina,SC,0,0,0,0,0,0,0,58.0,41.3,35.48,False
+South Dakota,SD,0,0,0,0,0,0,0,66.0,14.29,15.71,False
+Tennessee,TN,0,0,0,0,0,0,0,64.0,15.15,26.26,False
+Texas,TX,0,0,0,0,0,0,0,66.0,38.71,44.67,False
+Utah,UT,1,1,1,1,1,1,0,77.0,20.69,21.33,False
+Vermont,VT,1,1,1,1,1,1,1,77.0,73.33,63.33,False
+Virginia,VA,0,0,1,1,0,0,0,68.0,47.5,49.0,True
+Washington,WA,1,1,1,1,1,1,1,75.0,59.18,58.16,True
+West Virginia,WV,0,0,0,0,0,0,0,63.0,41.18,41.0,False
+Wisconsin,WI,1,0,1,1,0,0,0,67.0,42.42,36.36,True
+Wyoming,WY,0,0,0,0,0,0,0,61.0,10.0,15.0,False

@@ -1,0 +1,51 @@
+State,dems_perc_senate,dems_perc_house,dem_gov
+Alabama,22.86,26.67,False
+Alaska,35.0,37.5,False
+Arizona,43.33,48.33,False
+Arkansas,25.71,24.0,False
+California,72.5,75.0,True
+Colorado,54.29,63.08,True
+Connecticut,63.89,60.93,True
+Delaware,57.14,63.41,True
+Florida,42.5,39.17,False
+Georgia,37.5,41.67,False
+Hawaii,96.0,90.2,True
+Idaho,20.0,20.0,False
+Illinois,67.8,62.71,True
+Indiana,20.0,33.0,False
+Iowa,36.0,46.0,False
+Kansas,27.5,32.8,True
+Kentucky,26.32,39.0,False
+Louisiana,35.9,37.5,True
+Maine,60.0,58.94,True
+Maryland,70.21,70.21,False
+Massachusetts,85.0,79.38,False
+Michigan,42.11,47.27,True
+Minnesota,49.25,55.97,True
+Mississippi,36.54,37.7,False
+Missouri,29.41,28.83,False
+Montana,40.0,42.0,True
+Nebraska,0.0,0.0,False
+Nevada,61.9,69.05,True
+New Hampshire,58.33,58.5,False
+New Jersey,62.5,67.5,True
+New Mexico,61.9,65.71,True
+New York,63.49,70.67,True
+North Carolina,42.0,45.83,True
+North Dakota,21.28,15.96,False
+Ohio,27.27,38.38,False
+Oklahoma,18.75,23.76,False
+Oregon,63.33,63.33,True
+Pennsylvania,42.0,45.81,True
+Rhode Island,86.84,88.0,True
+South Carolina,41.3,35.48,False
+South Dakota,14.29,15.71,False
+Tennessee,15.15,26.26,False
+Texas,38.71,44.67,False
+Utah,20.69,21.33,False
+Vermont,73.33,63.33,False
+Virginia,47.5,49.0,True
+Washington,59.18,58.16,True
+West Virginia,41.18,41.0,False
+Wisconsin,42.42,36.36,True
+Wyoming,10.0,15.0,False
