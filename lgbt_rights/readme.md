@@ -1,0 +1,2 @@
+# LGBT anti-discrimination laws
+These Jupyter notebooks contain an opportunity analysis for progress in LGBT anti-discrimination laws. Combining multiple data streams, we can see what states are most prepared to enact laws protecting LGBT tenants and employees. Medium post is available [here](https://medium.com/@kevinrmcelwee/want-lgbt-rights-these-are-the-states-we-should-be-focusing-on-6828fe0c3406).
