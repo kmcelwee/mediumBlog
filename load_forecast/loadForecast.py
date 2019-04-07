@@ -78,14 +78,15 @@ def makeUsefulDf(df, noise=2.5, hours_prior=24):
 	def _chunks(l, n):
 		return [l[i : i + n] for i in range(0, len(l), n)]
 	
-	df['dates'] = df.apply(
-		lambda x: dt(
-			int(x['year']), 
-			int(x['month']), 
-			int(x['day']), 
-			int(x['hour'])), 
-		axis=1
-	)
+	if 'dates' not in df.columns:
+		df['dates'] = df.apply(
+			lambda x: dt(
+				int(x['year']), 
+				int(x['month']), 
+				int(x['day']), 
+				int(x['hour'])), 
+			axis=1
+		)
     
 	r_df = pd.DataFrame()
 	r_df["load_n"] = zscore(df["load"])
@@ -105,7 +106,7 @@ def makeUsefulDf(df, noise=2.5, hours_prior=24):
 
 	# create day of week vector
 	r_df["day"] = df["dates"].dt.dayofweek  # 0 is Monday.
-	w = ["S", "M", "T", "W", "R", "F", "A"]
+	w = ["M", "T", "W", "R", "F", "A", "S"]
 	for i, d in enumerate(w):
 		r_df[d] = (r_df["day"] == i).astype(int)
 
@@ -117,12 +118,12 @@ def makeUsefulDf(df, noise=2.5, hours_prior=24):
 
 		# create month vector
 	r_df["month"] = df["dates"].dt.month
-	y = [("m" + str(i)) for i in range(12)]
+	y = [("m" + str(i)) for i in range(1, 13)]
 	for i, m in enumerate(y):
 		r_df[m] = (r_df["month"] == i).astype(int)
 
 		# create 'load day before' vector
-	n = np.array([val for val in _chunks(list(r_df["load_n"]), 24) for _ in range(24)])
+	n = np.array([val for val in _chunks(list(r_df["load_prev_n"]), 24) for _ in range(24)])
 	l = ["l" + str(i) for i in range(24)]
 	for i, s in enumerate(l):
 		r_df[s] = n[:, i]
