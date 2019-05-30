@@ -5,7 +5,7 @@
 .node circle {
 	fill: #fff;
 	stroke: steelblue;
-	stroke-width: 3px;
+	stroke-width: 1px;
 }
 
 .node text {
@@ -15,5 +15,5 @@
 .link {
 	fill: none;
 	stroke: #ccc;
-	stroke-width: 2px;
+	stroke-width: 1px;
 }

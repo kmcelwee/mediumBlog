@@ -1,40 +1,18 @@
 
-$.getJSON("https://kmcelwee.github.io/mediumBlog/multiplicative_persistence/nested.json", function(json) {
+$.getJSON("https://kmcelwee.github.io/mediumBlog/multiplicative_persistence/nested_limited.json", function(json) {
     console.log(json[1]); // this will show the info it in firebug console
+  json.sort(function(a, b) {
+    return parseFloat(a["name"]) - parseFloat(b["name"])
+  })
 
-  var treeData = [
-  {
-    "name": "Top Level",
-    "parent": "null",
-    "children": [
-      {
-        "name": "Level 2: A",
-        "parent": "Top Level",
-        "children": [
-          {
-            "name": "Son of A",
-            "parent": "Level 2: A"
-          },
-          {
-            "name": "Daughter of A",
-            "parent": "Level 2: A"
-          }
-        ]
-      },
-      {
-        "name": "Level 2: B",
-        "parent": "Top Level"
-      }
-    ]
-  }
-];
-
+  var treeData = json[0];
+  
   var margin = {top: 20, right: 120, bottom: 20, left: 120};
-  var width = 960 - margin.right - margin.left;
-  var height = 500 - margin.top - margin.bottom;
+  var width = 3000 - margin.right - margin.left;
+  var height = 5000 - margin.top - margin.bottom;
     
   var i = 0;
-  var duration = 750;
+  var duration = 500;
   var root;
 
   var tree = d3.layout.tree().size([height, width]);
@@ -47,13 +25,13 @@ $.getJSON("https://kmcelwee.github.io/mediumBlog/multiplicative_persistence/nest
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  root = treeData[0];
+  root = treeData;
   root.x0 = height / 2;
   root.y0 = 0;
     
   update(root);
 
-  d3.select(self.frameElement).style("height", "500px");
+  d3.select(self.frameElement).style("height", "1500px");
 
   function update(source) {
 
@@ -89,7 +67,7 @@ $.getJSON("https://kmcelwee.github.io/mediumBlog/multiplicative_persistence/nest
       .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; });
 
     nodeUpdate.select("circle")
-      .attr("r", 10)
+      .attr("r", 5)
       .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
     nodeUpdate.select("text")
@@ -135,8 +113,8 @@ $.getJSON("https://kmcelwee.github.io/mediumBlog/multiplicative_persistence/nest
 
     // Stash the old positions for transition.
     nodes.forEach(function(d) {
-    d.x0 = d.x;
-    d.y0 = d.y;
+      d.x0 = d.x;
+      d.y0 = d.y;
     });
   }
 
@@ -151,4 +129,5 @@ $.getJSON("https://kmcelwee.github.io/mediumBlog/multiplicative_persistence/nest
     }
     update(d);
   }
+
 });
