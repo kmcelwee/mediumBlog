@@ -1,6 +1,6 @@
 # Multiplicative Persistence
 
-For context, consider reading the [article on Medium](###).
+For context, consider reading the [article on Medium](https://medium.com/@kevinrmcelwee/multiplicative-persistence-is-solved-1937692b26cc).
 
 ### Full Workflow
 [`full_workflow.ipynb`](https://github.com/kmcelwee/mediumBlog/blob/master/multiplicative_persistence/full_workflow.ipynb) applies the algorithm given a minimum and maximum search space.
