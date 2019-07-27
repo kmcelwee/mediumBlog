@@ -33,103 +33,55 @@ def add_noise(m, std):
 def makeUsefulDf(df, noise=2.5, hours_prior=24):
 	"""
 	Turn a dataframe of datetime and load data into a dataframe useful for
-	machine learning. Normalize values and turn 
-	Features are placed into r_df (return dataframe), creates the following columns
-		YEARS SINCE 2000
-		LOAD AT THIS TIME DAY BEFORE
-		HOUR OF DAY
-		- is12AM (0, 1)
-		- is1AM (0, 1)
-		...
-		- is11PM (0, 1)
-		DAYS OF THE WEEK
-		- isSunday (0, 1)
-		- isMonday (0, 1)
-		...
-		- isSaturday (0, 1)
-		MONTHS OF THE YEAR
-		- isJanuary (0, 1)
-		- isFebruary (0, 1)
-		...
-		- isDecember (0, 1)
-		TEMPERATURE
-		- Celcius (normalized from -1 to 1)
-		PREVIOUS DAY'S LOAD 
-		- 12AM of day previous (normalized from -1 to 1)
-		- 1AM of day previous (normalized from -1 to 1)
-		...
-		- 11PM of day previous (normalized from -1 to 1)
-		HOLIDAYS (the nerc6 holidays)
-		- isNewYears (0, 1)
-		- isMemorialDay (0, 1)
-		...
-		- is Christmas (0, 1)
+	machine learning. Normalize values.
 	"""
-
-	def _chunks(l, n):
-		return [l[i : i + n] for i in range(0, len(l), n)]
+	def _isHoliday(holiday, df):
+		m1 = None
+		if holiday == "New Year's Day":
+			m1 = (df["dates"].dt.month == 1) & (df["dates"].dt.day == 1)
+		if holiday == "Independence Day":
+			m1 = (df["dates"].dt.month == 7) & (df["dates"].dt.day == 4)
+		if holiday == "Christmas Day":
+			m1 = (df["dates"].dt.month == 12) & (df["dates"].dt.day == 25)
+		m1 = df["dates"].dt.date.isin(nerc6[holiday]) if m1 is None else m1
+		m2 = df["dates"].dt.date.isin(nerc6.get(holiday + " (Observed)", []))
+		return m1 | m2
 	
-	df['dates'] = df.apply(
-		lambda x: dt(
-			int(x['year']), 
-			int(x['month']), 
-			int(x['day']), 
-			int(x['hour'])), 
-		axis=1
-	)
-    
+	if 'dates' not in df.columns:
+		df['dates'] = df.apply(lambda x: dt(int(x['year']), int(x['month']), int(x['day']), int(x['hour'])), axis=1)
+
 	r_df = pd.DataFrame()
+	
+	# LOAD
 	r_df["load_n"] = zscore(df["load"])
-	r_df["years_n"] = zscore(df["dates"].dt.year)
-
-	# fix outliers
-	temp = df["tempc"].replace([-9999], np.nan)
-	temp.ffill(inplace=True)
-	# day-before predictions
-	temp_noise = add_noise(temp, noise)
-	r_df["temp_n"] = zscore(temp_noise)
-	r_df['temp_n^2'] = r_df["temp_n"] ** 2
-
-	# add the value of the load 24hrs before
 	r_df["load_prev_n"] = r_df["load_n"].shift(hours_prior)
 	r_df["load_prev_n"].bfill(inplace=True)
-
-	# create day of week vector
-	r_df["day"] = df["dates"].dt.dayofweek  # 0 is Monday.
-	w = ["S", "M", "T", "W", "R", "F", "A"]
-	for i, d in enumerate(w):
-		r_df[d] = (r_df["day"] == i).astype(int)
-
-		# create hour of day vector
-	r_df["hour"] = df["dates"].dt.hour
-	d = [("h" + str(i)) for i in range(24)]
-	for i, h in enumerate(d):
-		r_df[h] = (r_df["hour"] == i).astype(int)
-
-		# create month vector
-	r_df["month"] = df["dates"].dt.month
-	y = [("m" + str(i)) for i in range(12)]
-	for i, m in enumerate(y):
-		r_df[m] = (r_df["month"] == i).astype(int)
-
-		# create 'load day before' vector
+	
+	# LOAD PREV
+	def _chunks(l, n):
+		return [l[i : i + n] for i in range(0, len(l), n)]
 	n = np.array([val for val in _chunks(list(r_df["load_n"]), 24) for _ in range(24)])
 	l = ["l" + str(i) for i in range(24)]
 	for i, s in enumerate(l):
 		r_df[s] = n[:, i]
+		r_df[s] = r_df[s].shift(hours_prior)
+		r_df[s] = r_df[s].bfill()
+	r_df.drop(['load_n'], axis=1, inplace=True)
+	
+	# DATE
+	r_df["years_n"] = zscore(df["dates"].dt.year)
+	r_df = pd.concat([r_df, pd.get_dummies(df.dates.dt.hour, prefix='hour')], axis=1)
+	r_df = pd.concat([r_df, pd.get_dummies(df.dates.dt.dayofweek, prefix='day')], axis=1)
+	r_df = pd.concat([r_df, pd.get_dummies(df.dates.dt.month, prefix='month')], axis=1)
+	for holiday in ["New Year's Day", "Memorial Day", "Independence Day", "Labor Day", "Thanksgiving", "Christmas Day"]:
+		r_df[holiday] = _isHoliday(holiday, df)
 
-		# create holiday booleans
-	r_df["isNewYears"] = isHoliday("New Year's Day", df)
-	r_df["isMemorialDay"] = isHoliday("Memorial Day", df)
-	r_df["isIndependenceDay"] = isHoliday("Independence Day", df)
-	r_df["isLaborDay"] = isHoliday("Labor Day", df)
-	r_df["isThanksgiving"] = isHoliday("Thanksgiving", df)
-	r_df["isChristmas"] = isHoliday("Christmas Day", df)
+	# TEMP
+	temp_noise = df['tempc'] + np.random.normal(0, noise, df.shape[0])
+	r_df["temp_n"] = zscore(temp_noise)
+	r_df['temp_n^2'] = zscore([x*x for x in temp_noise])
 
-	m = r_df.drop(["month", "hour", "day", "load_n"], axis=1)
-	df = df.drop(['dates'], axis=1)
-
-	return m
+	return r_df
 
 def neural_net_predictions(all_X, all_y, EPOCHS=10):
 	import tensorflow as tf
@@ -146,7 +98,7 @@ def neural_net_predictions(all_X, all_y, EPOCHS=10):
 		layers.Dense(1)
 	  ])
 
-	optimizer = tf.keras.optimizers.RMSprop(0.001)
+	optimizer = tf.keras.optimizers.RMSprop(0.0001)
 
 	model.compile(
 		loss="mean_squared_error",
@@ -154,13 +106,12 @@ def neural_net_predictions(all_X, all_y, EPOCHS=10):
 		metrics=["mean_absolute_error", "mean_squared_error"],
 	)
 
-	early_stop = tf.keras.callbacks.EarlyStopping(monitor="val_loss", patience=10)
+	early_stop = tf.keras.callbacks.EarlyStopping(monitor="mean_absolute_error", patience=20)
 
 	history = model.fit(
 		X_train,
 		y_train,
 		epochs=EPOCHS,
-		validation_split=0.2,
 		verbose=0,
 		callbacks=[early_stop],
 	)
