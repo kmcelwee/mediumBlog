@@ -5,3 +5,4 @@ Jupyter notebooks for [my blog on Medium](https://medium.com/@kevinrmcelwee).
 * The development of `multiplicative_persistence` was moved to [`kmcelwee/multiplicative-persistence`](https://github.com/kmcelwee/multiplicative-persistence)
 * The development of `tsp` has been moved to [`kmcelwee/tsp`](https://github.com/kmcelwee/tsp/)
 * The dataset of 2020 Democratic primary Spotify data was moved to [`kmcelwee/2020-spotify`](https://github.com/kmcelwee/2020-spotify)
+* The development of `florida` has been moved to [`kmcelwee/florida`](https://github.com/kmcelwee/florida/)
